@@ -1,0 +1,36 @@
+.Pagination {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 120px;
+}
+
+.Pagination a {
+    width: 34px;
+    height: 34px;
+    background-color: #f3f3f3;
+    color: #2b94e1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 6px;
+    text-decoration: none;
+}
+
+.Pagination a.active {
+    background: #2b94e1;
+    color: #ffffff;
+}
+
+.Pagination a:hover {
+    background-color: #dee3e5;
+    color: #2b94e1;
+    cursor: pointer;
+}
+
+.Pagination a:active {
+    background-color: #0071bc;
+    color: #ffffff;
+    cursor: pointer;
+}

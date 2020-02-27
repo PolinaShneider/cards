@@ -1,0 +1,30 @@
+.Card {
+    border-radius: 6px;
+    box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    width: 345px;
+}
+
+.Card-image {
+    height: 160px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 0 30%;
+}
+
+.Card-info {
+    padding: 16px 50px 16px 24px;
+}
+
+.Card-info h1 {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.33;
+    color: #000000;
+}
+
+.Card-info p {
+    opacity: 0.6;
+    font-size: 16px;
+    line-height: 1.5;
+}

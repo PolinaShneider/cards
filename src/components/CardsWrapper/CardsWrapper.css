@@ -1,0 +1,16 @@
+.CardsWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    max-width: 1155px;
+    margin: 60px auto;
+}
+
+.CardsWrapper .no-data {
+    margin: 0 auto;
+}
+
+.CardsWrapper .Card {
+    margin-right: 40px;
+    margin-bottom: 40px;
+}

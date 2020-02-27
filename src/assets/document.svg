@@ -1,0 +1,13 @@
+<svg width="44" height="44" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" clip-rule="evenodd"
+          d="M17 43h4v-2h-4v2zM1 19h2v-4H1v4zm0 8h2v-4H1v4zm0 8h2v-4H1v4zM9 9h4V7H9v2zm0 34h4v-2H9v2zM1 9v2h2V9h2V7H3c-1.1 0-2 .9-2 2zm26 32h-2v2h2c1.1 0 2-.9 2-2v-2h-2v2zM3 39H1v2c0 1.1.9 2 2 2h2v-2H3v-2zm36-6H19V5h11v7c0 1.1.9 2 2 2h7v19zM33 7.2l3.8 3.8H33V7.2zM32 2H18c-1.1 0-2 .9-2 2v30c0 1.1.9 2 2 2h22c1.1 0 2-.9 2-2V12L32 2z"
+          fill="#000"/>
+    <mask id="a" maskUnits="userSpaceOnUse" x="1" y="2" width="41" height="41">
+        <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M17 43h4v-2h-4v2zM1 19h2v-4H1v4zm0 8h2v-4H1v4zm0 8h2v-4H1v4zM9 9h4V7H9v2zm0 34h4v-2H9v2zM1 9v2h2V9h2V7H3c-1.1 0-2 .9-2 2zm26 32h-2v2h2c1.1 0 2-.9 2-2v-2h-2v2zM3 39H1v2c0 1.1.9 2 2 2h2v-2H3v-2zm36-6H19V5h11v7c0 1.1.9 2 2 2h7v19zM33 7.2l3.8 3.8H33V7.2zM32 2H18c-1.1 0-2 .9-2 2v30c0 1.1.9 2 2 2h22c1.1 0 2-.9 2-2V12L32 2z"
+              fill="#fff"/>
+    </mask>
+    <g mask="url(#a)">
+        <path fill="#2B94E1" d="M0 0h44v44H0z"/>
+    </g>
+</svg>

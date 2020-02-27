@@ -1,5 +1,5 @@
 import notifier from 'codex-notifier';
-
+import { v4 as uuidv4 } from 'uuid';
 const initState = {
     cards: JSON.parse(localStorage.getItem("SEMrush-cards")) || [],
     modalIsOpen: false
@@ -8,7 +8,10 @@ const initState = {
 const cardsReducer = (state = initState, {type, payload}) => {
     switch (type) {
         case 'ADD_CARD':
-            const newItem = payload.data;
+            const newItem = {
+                ...payload.data,
+                id: uuidv4()
+            };
             const cards = [newItem, ...state.cards];
             try {
                 localStorage.setItem("SEMrush-cards", JSON.stringify(cards));
@@ -27,6 +30,25 @@ const cardsReducer = (state = initState, {type, payload}) => {
             return {
                 ...state,
                 cards
+            };
+        case 'DELETE_CARD':
+            const toDelete = state.cards.findIndex(elem => elem.id === payload.id);
+            const updatedCards = [...state.cards];
+            if (toDelete !== -1) {
+                updatedCards.splice(toDelete, 1)
+            }
+            try {
+                localStorage.setItem("SEMrush-cards", JSON.stringify(updatedCards));
+                window.location.reload()
+            } catch (e) {
+                notifier.show({
+                    message: `Something went wrong. Cannot delete card with id ${payload.id}`,
+                    type: 'error'
+                });
+            }
+            return {
+                ...state,
+                cards: updatedCards
             };
         case 'OPEN_MODAL':
             return {

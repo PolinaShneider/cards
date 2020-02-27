@@ -48,6 +48,35 @@
     color: #2b94e1;
 }
 
+.Modal-file-delete {
+    color: #ffffff;
+    width: 34px;
+    height: 34px;
+    opacity: 0.8;
+    border-radius: 4px;
+    background-color: #000000;
+    position: absolute;
+    top: 7px;
+    right: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Modal-file-delete:hover {
+    background-color: #ed2d2d;
+    cursor: pointer;
+}
+
+.Modal-file-delete:active {
+    background-color: #d00000;
+    cursor: pointer;
+}
+
+.Modal-file-delete svg {
+    color: #ffffff;
+}
+
 .Modal-file .Modal-file-empty img {
     display: block;
     margin: 30px auto 25px;
@@ -56,7 +85,7 @@
     object-fit: contain;
 }
 
-.Modal svg {
+.Modal-close {
     position: absolute;
     top: 10px;
     right: 15px;
@@ -80,4 +109,13 @@
     background-color: #4fae33;
     display: block;
     margin: 0 auto;
+}
+
+.Modal button:hover {
+    background: #1d9c00;
+}
+
+.Modal button:active, .Modal button:focus {
+    box-shadow: inset 0 2px 0 0 rgba(0, 0, 0, 0.3);
+    background-color: #1d9c00;
 }

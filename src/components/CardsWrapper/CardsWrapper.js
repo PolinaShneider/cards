@@ -4,9 +4,9 @@ import {Card} from "../Card/Card";
 
 export default class CardsWrapper extends Component {
     render() {
-        const {cards} = this.props;
+        const {cards, deleteCard} = this.props;
         const content = cards.length > 0 ?
-            cards.map(card => <Card {...card}/>) :
+            cards.map(card => <Card key={card.id} {...card} deleteCard={deleteCard} />) :
             <div className="no-data">No data. Wanna add something?</div>;
 
         return (

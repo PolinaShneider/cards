@@ -18,3 +18,12 @@ export const closeModalAction = () => {
         type: 'CLOSE_MODAL'
     }
 };
+
+export const deleteCardAction = (id) => {
+    return {
+        type: 'DELETE_CARD',
+        payload: {
+            id
+        }
+    }
+}

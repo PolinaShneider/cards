@@ -12,7 +12,7 @@ export const Pagination = ({postsPerPage, totalPosts, current}) => {
     return (
         <div className="Pagination">
             {pageNumbers.map(number => (
-                <Link className={number === current ? 'active': ''} to={`/?page=${number}`}>{number}</Link>
+                <Link key={number} className={number === current ? 'active': ''} to={`/?page=${number}`}>{number}</Link>
             ))}
         </div>
     );

@@ -3,6 +3,7 @@
     box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
     width: 345px;
+    position: relative;
 }
 
 .Card-image {
@@ -27,4 +28,33 @@
     opacity: 0.6;
     font-size: 16px;
     line-height: 1.5;
+}
+
+.Card-delete {
+    color: #ffffff;
+    width: 34px;
+    height: 34px;
+    opacity: 0.8;
+    border-radius: 4px;
+    background-color: #000000;
+    position: absolute;
+    top: 7px;
+    right: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Card-delete:hover {
+    background-color: #ed2d2d;
+    cursor: pointer;
+}
+
+.Card-delete:active {
+    background-color: #d00000;
+    cursor: pointer;
+}
+
+.Card-delete svg {
+    color: #ffffff;
 }

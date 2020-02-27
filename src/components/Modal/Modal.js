@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './Modal.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faTimes} from '@fortawesome/free-solid-svg-icons'
+import {faTimes, faTrash} from '@fortawesome/free-solid-svg-icons'
 import documentIcon from "../../assets/document.svg";
 
 export class Modal extends Component {
@@ -13,12 +13,12 @@ export class Modal extends Component {
     };
 
     render() {
-        const {hidden, closeModal} = this.props;
+        const {hidden} = this.props;
         const {file, errors} = this.state;
         return (
             <div className="Modal-overlay" hidden={hidden}>
                 <form className="Modal" autoComplete="off">
-                    <FontAwesomeIcon onClick={() => this.closeModal()} icon={faTimes}/>
+                    <FontAwesomeIcon className="Modal-close" onClick={() => this.closeModal()} icon={faTimes}/>
                     <h1>Add new</h1>
                     <label htmlFor="cover" className="Modal-file">
                         {
@@ -27,6 +27,13 @@ export class Modal extends Component {
                                     <img src={documentIcon} alt="Upload an image"/>
                                     select an image file to upload or drag it here
                                 </div>
+                            )
+                        }
+                        {
+                            file && (
+                                <span className="Modal-file-delete">
+                                    <FontAwesomeIcon onClick={(e) => this.deleteCover(e)} icon={faTrash}/>
+                                </span>
                             )
                         }
                         <input
@@ -67,8 +74,8 @@ export class Modal extends Component {
     }
 
     handleFiles(files) {
-        try {
-            const reader = new FileReader();
+        const reader = new FileReader();
+        if (reader) {
             reader.readAsDataURL(files[0]);
             reader.onload = (e) => {
                 const url = e.target.result;
@@ -83,8 +90,6 @@ export class Modal extends Component {
                     file: url
                 });
             };
-        } catch (e) {
-            console.error(e.message)
         }
     }
 
@@ -116,11 +121,7 @@ export class Modal extends Component {
         }
 
         if (!errors.length) {
-            onSave({
-                title,
-                description,
-                image: file
-            });
+            onSave({title, description, image: file});
             this.closeModal();
         } else {
             this.setState({
@@ -131,13 +132,15 @@ export class Modal extends Component {
 
     closeModal() {
         const {closeModal} = this.props;
-        this.setState({
-            title: '',
-            description: '',
-            file: '',
-            errors: []
-        });
+        this.setState({title: '', description: '', file: '', errors: []});
         document.querySelector('.Modal-file').style = "";
         closeModal();
+    }
+
+    deleteCover(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.setState({file: ''});
+        document.querySelector('.Modal-file').style = "";
     }
 }

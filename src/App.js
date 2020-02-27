@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {Header} from "../components/Header/Header";
-import CardsWrapper from "../components/CardsWrapper/CardsWrapper";
-import {Modal} from "../components/Modal/Modal";
-import {addCardAction, closeModalAction, openModalAction} from "../actions/cards";
+import {Header} from "./components/Header/Header";
+import CardsWrapper from "./components/CardsWrapper/CardsWrapper";
+import {Modal} from "./components/Modal/Modal";
+import {addCardAction, closeModalAction, deleteCardAction, openModalAction} from "./actions/cards";
 import {connect} from "react-redux";
-import {Pagination} from "../components/Pagination/Pagination";
+import {Pagination} from "./components/Pagination/Pagination";
 import {compose} from "redux";
 import {withRouter, useLocation} from "react-router-dom";
 import {Route} from "react-router-dom";
@@ -31,7 +31,7 @@ class App extends Component {
     }
 
     render() {
-        const {data: {cards: posts, modalIsOpen}, openModal, closeModal, addCard} = this.props;
+        const {data: {cards: posts, modalIsOpen}, openModal, closeModal, addCard, deleteCard} = this.props;
         const {currentPage, postsPerPage} = this.state;
         const indexOfLastPost = currentPage * postsPerPage;
         const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -40,7 +40,7 @@ class App extends Component {
         return (
             <div className="App">
                 <Header openModal={openModal}/>
-                <Route path="/" component={() => <CardsWrapper cards={currentPosts}/>}/>
+                <Route path="/" component={() => <CardsWrapper cards={currentPosts} deleteCard={deleteCard}/>}/>
                 <Pagination
                     postsPerPage={postsPerPage}
                     totalPosts={posts.length}
@@ -75,7 +75,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         openModal: () => dispatch(openModalAction()),
         closeModal: () => dispatch(closeModalAction()),
-        addCard: (data) => dispatch(addCardAction(data))
+        addCard: (data) => dispatch(addCardAction(data)),
+        deleteCard: (id) => dispatch(deleteCardAction(id))
     }
 };
 

@@ -8,7 +8,7 @@ class CardsWrapper extends Component {
         const {cards, deleteCard} = this.props;
         const content = cards.length > 0 ?
             cards.map(card => <Card key={card.id} {...card} deleteCard={deleteCard} />) :
-            <div className="no-data">No data. Wanna add something?</div>;
+            <div className="CardsWrapper-empty">No data. Wanna add something?</div>;
 
         return (
             <div className="CardsWrapper">

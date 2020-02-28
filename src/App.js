@@ -21,11 +21,17 @@ class App extends Component {
             postsPerPage: 9
         };
 
+        /**
+         * Instantly listen to location (search param) change - pagination click
+         */
         this.props.history.listen((location) => this.paginate(location));
     }
 
     componentDidMount() {
         const {history} = this.props;
+        /**
+         * Paginate on manual search param indication or redirect if it is invalid
+         */
         const paginationSuccess = this.paginate();
 
         if (!paginationSuccess) {
@@ -58,6 +64,9 @@ class App extends Component {
 
     paginate(location = this.props.location) {
         const params = queryString.parse(location.search);
+        /**
+         * Search param is valid, for example '?page=1', not '?page=hello'
+         */
         if (params.page && !isNaN(params.page)) {
             this.setState({
                 currentPage: +params.page

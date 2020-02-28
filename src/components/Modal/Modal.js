@@ -3,14 +3,14 @@ import './Modal.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faTimes, faTrash} from '@fortawesome/free-solid-svg-icons'
 import documentIcon from "../../assets/document.svg";
+import DragnDrop from "../DragnDrop/DragnDrop";
 
 export class Modal extends Component {
-    state = {
-        file: '',
-        title: '',
-        description: '',
-        errors: []
-    };
+    constructor(props) {
+        super(props);
+        this.state = {file: '', title: '', description: '', errors: []};
+        this.cover = React.createRef();
+    }
 
     render() {
         const {hidden} = this.props;
@@ -20,7 +20,8 @@ export class Modal extends Component {
                 <form className="Modal" autoComplete="off">
                     <FontAwesomeIcon className="Modal-close" onClick={() => this.closeModal()} icon={faTimes}/>
                     <h1>Add new</h1>
-                    <label htmlFor="cover" className="Modal-file">
+                    <label htmlFor="cover" className="Modal-file" ref={this.cover}>
+                        <DragnDrop onDrop={(files) => this.showPreview(files)}/>
                         {
                             !file && (
                                 <div className="Modal-file-empty">
@@ -40,7 +41,7 @@ export class Modal extends Component {
                             id="cover"
                             type="file"
                             accept="image/*"
-                            onChange={(e) => this.handleFiles(e.target.files)}
+                            onChange={(e) => this.showPreview(e.target.files)}
                         />
                     </label>
                     <div className="input-group">
@@ -73,26 +74,6 @@ export class Modal extends Component {
         );
     }
 
-    handleFiles(files) {
-        const reader = new FileReader();
-        if (reader) {
-            reader.readAsDataURL(files[0]);
-            reader.onload = (e) => {
-                const url = e.target.result;
-                const placeholder = document.querySelector('.Modal-file');
-                placeholder.style.backgroundColor = 'transparent';
-                placeholder.style.backgroundImage = `url(${url})`;
-                placeholder.style.backgroundSize = 'cover';
-                placeholder.style.backgroundRepeat = 'no-repeat';
-                placeholder.style.backgroundPosition = '0 30%';
-
-                this.setState({
-                    file: url
-                });
-            };
-        }
-    }
-
     handleInput(e) {
         const target = e.target;
         const value = target.value;
@@ -104,7 +85,7 @@ export class Modal extends Component {
 
     addCard(e) {
         e.preventDefault();
-        const {onSave, closeModal} = this.props;
+        const {onSave} = this.props;
         const {file, title, description} = this.state;
         const errors = [];
 
@@ -133,7 +114,9 @@ export class Modal extends Component {
     closeModal() {
         const {closeModal} = this.props;
         this.setState({title: '', description: '', file: '', errors: []});
-        document.querySelector('.Modal-file').style = "";
+        if (this.cover.current) {
+            this.cover.current.style.style = "";
+        }
         closeModal();
     }
 
@@ -141,6 +124,26 @@ export class Modal extends Component {
         e.preventDefault();
         e.stopPropagation();
         this.setState({file: ''});
-        document.querySelector('.Modal-file').style = "";
+        if (this.cover.current) {
+            this.cover.current.style.style = "";
+        }
+    }
+
+    showPreview(files) {
+        const reader = new FileReader();
+        if (reader) {
+            reader.readAsDataURL(files[0]);
+            reader.onload = (e) => {
+                const url = e.target.result;
+
+                if (this.cover.current) {
+                    this.cover.current.style.background = `url(${url}) 0 30% / cover no-repeat transparent`;
+                }
+
+                this.setState({
+                    file: url
+                });
+            };
+        }
     }
 }

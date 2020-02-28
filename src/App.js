@@ -9,6 +9,8 @@ import {compose} from "redux";
 import {withRouter, useLocation} from "react-router-dom";
 import {Route} from "react-router-dom";
 import queryString from 'query-string';
+import {DndProvider} from 'react-dnd'
+import Backend from 'react-dnd-html5-backend'
 
 class App extends Component {
 
@@ -39,14 +41,16 @@ class App extends Component {
 
         return (
             <div className="App">
-                <Header openModal={openModal}/>
-                <Route path="/" component={() => <CardsWrapper cards={currentPosts} deleteCard={deleteCard}/>}/>
-                <Pagination
-                    postsPerPage={postsPerPage}
-                    totalPosts={posts.length}
-                    current={currentPage}
-                />
-                <Modal onSave={addCard} closeModal={closeModal} hidden={!modalIsOpen}/>
+                <DndProvider backend={Backend}>
+                    <Header openModal={openModal}/>
+                    <Route path="/" component={() => <CardsWrapper cards={currentPosts} deleteCard={deleteCard}/>}/>
+                    <Pagination
+                        postsPerPage={postsPerPage}
+                        totalPosts={posts.length}
+                        current={currentPage}
+                    />
+                    <Modal onSave={addCard} closeModal={closeModal} hidden={!modalIsOpen}/>
+                </DndProvider>
             </div>
         );
     }

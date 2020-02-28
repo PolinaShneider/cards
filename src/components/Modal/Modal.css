@@ -1,0 +1,145 @@
+.Modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #ffffff;
+    width: 399px;
+    border-radius: 6px;
+    box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2);
+    z-index: 1010;
+    padding: 32px 40px 40px 40px;
+}
+
+.Modal-overlay {
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.6);
+}
+
+.Modal-file {
+    display: block;
+    width: 319px;
+    height: 148px;
+    border-radius: 5px;
+    border: solid 1px #dee3e5;
+    background-color: #e4ecf1;
+    cursor: pointer;
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.Modal h1 {
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 1.19;
+    color: #424242;
+    margin: 0 0 30px 0;
+}
+
+.Modal-file input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+}
+
+.Modal-file .Modal-file-empty {
+    font-size: 14px;
+    text-align: center;
+    color: #2b94e1;
+}
+
+.Modal-file-delete {
+    color: #ffffff;
+    width: 34px;
+    height: 34px;
+    opacity: 0.8;
+    border-radius: 4px;
+    background-color: #000000;
+    position: absolute;
+    top: 7px;
+    right: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Modal-file-delete:hover {
+    background-color: #ed2d2d;
+    cursor: pointer;
+}
+
+.Modal-file-delete:active {
+    background-color: #d00000;
+    cursor: pointer;
+}
+
+.Modal-file-delete svg {
+    color: #ffffff;
+}
+
+.Modal-file .Modal-file-empty img {
+    display: block;
+    margin: 30px auto 25px;
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+}
+
+.Modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    opacity: 0.5;
+}
+
+.Modal svg:hover {
+    cursor: pointer;
+    opacity: 1;
+}
+
+.Modal textarea {
+    min-height: 88px;
+}
+
+.Modal button {
+    color: #ffffff;
+    font-size: 16px;
+    border-radius: 5px;
+    background-color: #4fae33;
+    display: block;
+    margin: 0 auto;
+}
+
+.Modal button:hover {
+    background: #1d9c00;
+}
+
+.Modal button:active, .Modal button:focus {
+    box-shadow: inset 0 2px 0 0 rgba(0, 0, 0, 0.3);
+    background-color: #1d9c00;
+}
+
+@media (max-width: 425px) {
+    .Modal {
+        width: 100%;
+        max-height: 100vh;
+        border-radius: 0;
+    }
+
+    .Modal-file {
+        max-width: 100%;
+    }
+
+    .Modal-file-empty {
+        padding: 0 10px;
+    }
+}

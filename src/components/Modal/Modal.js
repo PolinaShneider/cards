@@ -11,6 +11,7 @@ class Modal extends Component {
         super(props);
         this.state = {file: '', title: '', description: '', bigCover: false, errors: []};
         this.cover = React.createRef();
+        this.checkbox = React.createRef();
     }
 
     render() {
@@ -69,6 +70,7 @@ class Modal extends Component {
                         <input
                             type="checkbox"
                             name="bigCover"
+                            ref={this.checkbox}
                             checked={this.state.checked}
                             onChange={(e) => this.setState(
                                 {bigCover: e.target.checked}
@@ -128,6 +130,9 @@ class Modal extends Component {
         this.setState({title: '', description: '', file: '', errors: [], bigCover: false});
         if (this.cover.current) {
             this.cover.current.style = '';
+        }
+        if (this.checkbox.current) {
+            this.checkbox.current.checked = false;
         }
         closeModal();
     }

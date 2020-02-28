@@ -3,7 +3,7 @@ import './Modal.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faTimes, faTrash} from '@fortawesome/free-solid-svg-icons'
 import documentIcon from '../../assets/document.svg';
-import DragnDrop from '../DragnDrop/DragnDrop';
+import DragnDrop from '../DragnDrop/DragnDrop.js';
 import PropTypes from 'prop-types';
 
 class Modal extends Component {

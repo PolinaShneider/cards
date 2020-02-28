@@ -1,28 +1,29 @@
 import notifier from 'codex-notifier';
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
+
 const initState = {
-    cards: JSON.parse(localStorage.getItem("SEMrush-cards")) || [],
+    cards: JSON.parse(localStorage.getItem('SEMrush-cards')) || [],
     modalIsOpen: false
 };
 
 const cardsReducer = (state = initState, {type, payload}) => {
     switch (type) {
-        case 'ADD_CARD':
+        case 'ADD_CARD': {
             const newItem = {
                 ...payload.data,
                 id: uuidv4()
             };
             const cards = [newItem, ...state.cards];
             try {
-                localStorage.setItem("SEMrush-cards", JSON.stringify(cards));
+                localStorage.setItem('SEMrush-cards', JSON.stringify(cards));
             } catch (e) {
                 notifier.show({
-                    message: `Hey, there is too much data in localStorage. Clear it?`,
+                    message: 'Hey, there is too much data in localStorage. Clear it?',
                     type: 'confirm',
                     okText: 'Yep',
                     cancelText: 'No, I\'ll take risks',
                     okHandler: () => {
-                        localStorage.setItem("SEMrush-cards", JSON.stringify([]));
+                        localStorage.setItem('SEMrush-cards', JSON.stringify([]));
                         window.location.reload()
                     }
                 });
@@ -31,14 +32,15 @@ const cardsReducer = (state = initState, {type, payload}) => {
                 ...state,
                 cards
             };
-        case 'DELETE_CARD':
+        }
+        case 'DELETE_CARD': {
             const toDelete = state.cards.findIndex(elem => elem.id === payload.id);
             const updatedCards = [...state.cards];
             if (toDelete !== -1) {
                 updatedCards.splice(toDelete, 1)
             }
             try {
-                localStorage.setItem("SEMrush-cards", JSON.stringify(updatedCards));
+                localStorage.setItem('SEMrush-cards', JSON.stringify(updatedCards));
                 window.location.reload()
             } catch (e) {
                 notifier.show({
@@ -50,16 +52,19 @@ const cardsReducer = (state = initState, {type, payload}) => {
                 ...state,
                 cards: updatedCards
             };
-        case 'OPEN_MODAL':
+        }
+        case 'OPEN_MODAL': {
             return {
                 ...state,
                 modalIsOpen: true
             };
-        case 'CLOSE_MODAL':
+        }
+        case 'CLOSE_MODAL': {
             return {
                 ...state,
                 modalIsOpen: false
             };
+        }
         default:
             return state;
     }

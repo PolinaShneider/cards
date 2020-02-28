@@ -1,10 +1,11 @@
 import React from 'react'
 import {NativeTypes} from 'react-dnd-html5-backend'
 import {useDrop} from 'react-dnd'
-import notifier from "codex-notifier";
-import "./TargetBox.css";
+import notifier from 'codex-notifier';
+import './TargetBox.css';
+import PropTypes from 'prop-types';
 
-export const TargetBox = props => {
+const TargetBox = props => {
     const {onDrop} = props;
     const [{canDrop, isOver}, drop] = useDrop({
         accept: [NativeTypes.FILE],
@@ -29,10 +30,16 @@ export const TargetBox = props => {
             canDrop: monitor.canDrop(),
         }),
     });
-    const classes = ["TargetBox"];
-    canDrop && isOver && classes.push("TargetBox-active");
+    const classes = ['TargetBox'];
+    canDrop && isOver && classes.push('TargetBox-active');
 
     return (
-        <div ref={drop} className={classes.join(" ")}/>
+        <div ref={drop} className={classes.join(' ')}/>
     )
 };
+
+TargetBox.propTypes = {
+    onDrop: PropTypes.func
+};
+
+export default TargetBox;

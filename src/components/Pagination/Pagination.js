@@ -1,8 +1,9 @@
 import React from 'react';
-import "./Pagination.css";
-import {Link} from "react-router-dom";
+import './Pagination.css';
+import {Link} from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-export const Pagination = ({postsPerPage, totalPosts, current}) => {
+const Pagination = ({postsPerPage, totalPosts, current}) => {
     const pageNumbers = [];
 
     for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
@@ -17,3 +18,11 @@ export const Pagination = ({postsPerPage, totalPosts, current}) => {
         </div>
     );
 };
+
+Pagination.propTypes = {
+    postsPerPage: PropTypes.number,
+    totalPosts: PropTypes.number,
+    current: PropTypes.number
+};
+
+export default Pagination;

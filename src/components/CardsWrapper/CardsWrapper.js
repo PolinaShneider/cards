@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import './CardsWrapper.css';
-import {Card} from "../Card/Card";
+import Card from '../Card/Card';
+import PropTypes from 'prop-types';
 
-export default class CardsWrapper extends Component {
+class CardsWrapper extends Component {
     render() {
         const {cards, deleteCard} = this.props;
         const content = cards.length > 0 ?
@@ -16,3 +17,10 @@ export default class CardsWrapper extends Component {
         );
     }
 }
+
+CardsWrapper.propTypes = {
+    cards: PropTypes.array,
+    deleteCard: PropTypes.func
+};
+
+export default CardsWrapper;

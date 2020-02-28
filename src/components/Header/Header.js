@@ -1,8 +1,9 @@
 import React from 'react';
 import logo from '../../assets/logo.svg';
 import './Header.css';
+import PropTypes from 'prop-types';
 
-export function Header(props) {
+const Header = (props) => {
     const {openModal} = props;
     return (
         <header className="Header">
@@ -19,4 +20,10 @@ export function Header(props) {
             </div>
         </header>
     );
-}
+};
+
+Header.propTypes = {
+    openModal: PropTypes.func
+};
+
+export default Header;

@@ -58,3 +58,15 @@
 .Card-delete svg {
     color: #ffffff;
 }
+
+@media (max-width: 768px) {
+    .Card {
+        width: calc(50% - 10px);
+    }
+}
+
+@media (max-width: 425px) {
+    .Card {
+        width: 100%;
+    }
+}

@@ -2,10 +2,11 @@ import React, {Component} from 'react';
 import './Modal.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faTimes, faTrash} from '@fortawesome/free-solid-svg-icons'
-import documentIcon from "../../assets/document.svg";
-import DragnDrop from "../DragnDrop/DragnDrop";
+import documentIcon from '../../assets/document.svg';
+import DragnDrop from '../DragnDrop/DragnDrop';
+import PropTypes from 'prop-types';
 
-export class Modal extends Component {
+class Modal extends Component {
     constructor(props) {
         super(props);
         this.state = {file: '', title: '', description: '', errors: []};
@@ -115,7 +116,7 @@ export class Modal extends Component {
         const {closeModal} = this.props;
         this.setState({title: '', description: '', file: '', errors: []});
         if (this.cover.current) {
-            this.cover.current.style.style = "";
+            this.cover.current.style = '';
         }
         closeModal();
     }
@@ -125,7 +126,7 @@ export class Modal extends Component {
         e.stopPropagation();
         this.setState({file: ''});
         if (this.cover.current) {
-            this.cover.current.style.style = "";
+            this.cover.current.style = '';
         }
     }
 
@@ -147,3 +148,11 @@ export class Modal extends Component {
         }
     }
 }
+
+Modal.propTypes = {
+    hidden: PropTypes.bool,
+    onSave: PropTypes.func,
+    closeModal: PropTypes.func
+};
+
+export default Modal;

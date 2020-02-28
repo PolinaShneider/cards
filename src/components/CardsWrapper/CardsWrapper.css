@@ -14,3 +14,34 @@
     margin-right: 40px;
     margin-bottom: 40px;
 }
+
+@media (max-width: 768px) {
+    .CardsWrapper {
+        justify-content: space-between;
+        margin: 20px auto;
+    }
+
+    .CardsWrapper .Card {
+        margin-right: 20px;
+        margin-bottom: 20px;
+    }
+
+    .CardsWrapper .Card:nth-of-type(2n + 1) {
+        margin-right: 20px;
+    }
+
+    .CardsWrapper .Card:nth-of-type(2n) {
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 425px) {
+    .CardsWrapper {
+        max-width: 345px;
+        margin: 20px auto;
+    }
+
+    .CardsWrapper .Card {
+        margin-right: 0;
+    }
+}

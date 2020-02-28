@@ -1,15 +1,16 @@
 import React from 'react';
 import './Card.css';
-import {faTrash} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import notifier from "codex-notifier";
+import {faTrash} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import notifier from 'codex-notifier';
+import PropTypes from 'prop-types';
 
-export function Card(props) {
+const Card = (props) => {
     const {title, description, image, id, deleteCard} = props;
 
     function removeCard() {
         notifier.show({
-            message: `You are going to delete card. Are you sure?`,
+            message: 'You are going to delete card. Are you sure?',
             type: 'confirm',
             okText: 'Yes',
             cancelText: 'No, wait',
@@ -37,4 +38,14 @@ export function Card(props) {
             </div>
         </div>
     );
-}
+};
+
+Card.propTypes = {
+    title: PropTypes.string,
+    description: PropTypes.string,
+    image: PropTypes.string,
+    id: PropTypes.string,
+    deleteCard: PropTypes.func
+};
+
+export default Card;

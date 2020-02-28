@@ -1,19 +1,19 @@
 import React, {Component} from 'react';
-import {Header} from "./components/Header/Header";
-import CardsWrapper from "./components/CardsWrapper/CardsWrapper";
-import {Modal} from "./components/Modal/Modal";
-import {addCardAction, closeModalAction, deleteCardAction, openModalAction} from "./actions/cards";
-import {connect} from "react-redux";
-import {Pagination} from "./components/Pagination/Pagination";
-import {compose} from "redux";
-import {withRouter, useLocation} from "react-router-dom";
-import {Route} from "react-router-dom";
+import PropTypes from 'prop-types';
+import Header from './components/Header/Header';
+import CardsWrapper from './components/CardsWrapper/CardsWrapper';
+import Modal from './components/Modal/Modal';
+import {addCardAction, closeModalAction, deleteCardAction, openModalAction} from './actions/cards';
+import {connect} from 'react-redux';
+import Pagination from './components/Pagination/Pagination';
+import {compose} from 'redux';
+import {withRouter} from 'react-router-dom';
+import {Route} from 'react-router-dom';
 import queryString from 'query-string';
 import {DndProvider} from 'react-dnd'
 import Backend from 'react-dnd-html5-backend'
 
 class App extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -21,14 +21,15 @@ class App extends Component {
             postsPerPage: 9
         };
 
-        this.props.history.listen((location, action) => this.paginate(location));
+        this.props.history.listen((location) => this.paginate(location));
     }
 
     componentDidMount() {
+        const {history} = this.props;
         const paginationSuccess = this.paginate();
 
         if (!paginationSuccess) {
-            this.props.history.push('/?page=1')
+            history.push('/?page=1')
         }
     }
 
@@ -82,6 +83,16 @@ const mapDispatchToProps = (dispatch) => {
         addCard: (data) => dispatch(addCardAction(data)),
         deleteCard: (id) => dispatch(deleteCardAction(id))
     }
+};
+
+App.propTypes = {
+    data: PropTypes.object,
+    openModal: PropTypes.func,
+    closeModal: PropTypes.func,
+    addCard: PropTypes.func,
+    deleteCard: PropTypes.func,
+    history: PropTypes.object,
+    location: PropTypes.object
 };
 
 export default compose(withRouter, connect(mapStateToProps, mapDispatchToProps))(App)

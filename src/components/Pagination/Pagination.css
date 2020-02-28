@@ -34,3 +34,9 @@
     color: #ffffff;
     cursor: pointer;
 }
+
+@media (max-width: 768px) {
+    .Pagination {
+        margin-bottom: 40px;
+    }
+}

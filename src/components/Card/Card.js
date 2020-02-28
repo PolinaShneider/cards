@@ -6,7 +6,7 @@ import notifier from 'codex-notifier';
 import PropTypes from 'prop-types';
 
 const Card = (props) => {
-    const {title, description, image, id, deleteCard} = props;
+    const {title, description, image, id, deleteCard, bigCover} = props;
 
     function removeCard() {
         notifier.show({
@@ -20,8 +20,14 @@ const Card = (props) => {
         });
     }
 
+    const classes = ['Card'];
+
+    if (bigCover) {
+        classes.push('Card--big')
+    }
+
     return (
-        <div className="Card">
+        <div className={classes.join(' ')}>
             <span className="Card-delete" onClick={() => removeCard()}>
                 <FontAwesomeIcon icon={faTrash}/>
             </span>
@@ -45,6 +51,7 @@ Card.propTypes = {
     description: PropTypes.string,
     image: PropTypes.string,
     id: PropTypes.string,
+    bigCover: PropTypes.bool,
     deleteCard: PropTypes.func
 };
 

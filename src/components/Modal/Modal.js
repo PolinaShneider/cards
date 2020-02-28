@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 class Modal extends Component {
     constructor(props) {
         super(props);
-        this.state = {file: '', title: '', description: '', errors: []};
+        this.state = {file: '', title: '', description: '', bigCover: false, errors: []};
         this.cover = React.createRef();
     }
 
@@ -64,6 +64,17 @@ class Modal extends Component {
                             onChange={(e) => this.handleInput(e)}
                         />
                     </div>
+                    <div className="checkbox-group">
+                        <label>Is big</label>
+                        <input
+                            type="checkbox"
+                            name="bigCover"
+                            checked={this.state.checked}
+                            onChange={(e) => this.setState(
+                                {bigCover: e.target.checked}
+                            )}
+                        />
+                    </div>
                     {errors.length > 0 && (
                         <div className="alert-danger">{errors[0]}</div>
                     )}
@@ -87,7 +98,7 @@ class Modal extends Component {
     addCard(e) {
         e.preventDefault();
         const {onSave} = this.props;
-        const {file, title, description} = this.state;
+        const {file, title, description, bigCover} = this.state;
         const errors = [];
 
         if (!file) {
@@ -103,7 +114,7 @@ class Modal extends Component {
         }
 
         if (!errors.length) {
-            onSave({title, description, image: file});
+            onSave({title, description, image: file, bigCover});
             this.closeModal();
         } else {
             this.setState({
@@ -114,7 +125,7 @@ class Modal extends Component {
 
     closeModal() {
         const {closeModal} = this.props;
-        this.setState({title: '', description: '', file: '', errors: []});
+        this.setState({title: '', description: '', file: '', errors: [], bigCover: false});
         if (this.cover.current) {
             this.cover.current.style = '';
         }

@@ -15,7 +15,7 @@
     margin-bottom: 40px;
 }
 
-@media (max-width: 768px) {
+@media (min-width: 425px) and (max-width: 768px) {
     .CardsWrapper {
         justify-content: space-between;
         margin: 20px auto;

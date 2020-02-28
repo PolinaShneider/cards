@@ -6,6 +6,10 @@
     position: relative;
 }
 
+.Card--big {
+    width: 729px;
+}
+
 .Card-image {
     height: 160px;
     background-size: cover;

@@ -67,7 +67,7 @@ class App extends Component {
         /**
          * Search param is valid, for example '?page=1', not '?page=hello'
          */
-        if (params.page && !isNaN(params.page)) {
+        if (params.page && !isNaN(params.page) && +params.page > 0) {
             this.setState({
                 currentPage: +params.page
             });

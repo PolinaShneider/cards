@@ -3,7 +3,15 @@ import PropTypes from 'prop-types';
 import Header from './components/Header/Header';
 import CardsWrapper from './components/CardsWrapper/CardsWrapper';
 import Modal from './components/Modal/Modal';
-import {addCardAction, closeModalAction, deleteCardAction, openModalAction} from './actions/cards';
+import {
+    addCardAction,
+    closeModalAction,
+    confirmEditAction,
+    deleteCardAction,
+    editCardAction,
+    openModalAction,
+    toggleEditModeAction
+} from './actions/cards';
 import {connect} from 'react-redux';
 import Pagination from './components/Pagination/Pagination';
 import {compose} from 'redux';
@@ -40,7 +48,16 @@ class App extends Component {
     }
 
     render() {
-        const {data: {cards: posts, modalIsOpen}, openModal, closeModal, addCard, deleteCard} = this.props;
+        const {
+            data: {cards: posts, modalIsOpen, editedItem, editingMode},
+            openModal,
+            closeModal,
+            addCard,
+            deleteCard,
+            editCard,
+            confirmEdit,
+            toggleEditMode
+        } = this.props;
         const {currentPage, postsPerPage} = this.state;
         const indexOfLastPost = currentPage * postsPerPage;
         const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -49,14 +66,30 @@ class App extends Component {
         return (
             <div className="App">
                 <DndProvider backend={Backend}>
-                    <Header openModal={openModal}/>
-                    <Route path="/" component={() => <CardsWrapper cards={currentPosts} deleteCard={deleteCard}/>}/>
+                    <Header openModal={openModal} toggleEditMode={toggleEditMode} editingMode={editingMode}/>
+                    <Route
+                        path="/"
+                        component={() =>
+                            <CardsWrapper
+                                editingMode={editingMode}
+                                cards={currentPosts}
+                                editCard={editCard}
+                                deleteCard={deleteCard}
+                            />
+                        }
+                    />
                     <Pagination
                         postsPerPage={postsPerPage}
                         totalPosts={posts.length}
                         current={currentPage}
                     />
-                    <Modal onSave={addCard} closeModal={closeModal} hidden={!modalIsOpen}/>
+                    <Modal
+                        confirmEdit={confirmEdit}
+                        editedItem={editedItem}
+                        onSave={addCard}
+                        closeModal={closeModal}
+                        hidden={!modalIsOpen}
+                    />
                 </DndProvider>
             </div>
         );
@@ -90,7 +123,10 @@ const mapDispatchToProps = (dispatch) => {
         openModal: () => dispatch(openModalAction()),
         closeModal: () => dispatch(closeModalAction()),
         addCard: (data) => dispatch(addCardAction(data)),
-        deleteCard: (id) => dispatch(deleteCardAction(id))
+        deleteCard: (id) => dispatch(deleteCardAction(id)),
+        editCard: (data) => dispatch(editCardAction(data)),
+        confirmEdit: (data) => dispatch(confirmEditAction(data)),
+        toggleEditMode: () => dispatch(toggleEditModeAction())
     }
 };
 
@@ -100,6 +136,9 @@ App.propTypes = {
     closeModal: PropTypes.func,
     addCard: PropTypes.func,
     deleteCard: PropTypes.func,
+    editCard: PropTypes.func,
+    confirmEdit: PropTypes.func,
+    toggleEditMode: PropTypes.func,
     history: PropTypes.object,
     location: PropTypes.object
 };

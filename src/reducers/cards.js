@@ -1,9 +1,11 @@
-import notifier from 'codex-notifier';
 import {v4 as uuidv4} from 'uuid';
+import {deletionError, localStorageIsFull} from '../helpers/notifications';
 
 const initState = {
     cards: JSON.parse(localStorage.getItem('SEMrush-cards')) || [],
-    modalIsOpen: false
+    editedItem: null,
+    modalIsOpen: false,
+    editingMode: false
 };
 
 const cardsReducer = (state = initState, {type, payload}) => {
@@ -17,16 +19,7 @@ const cardsReducer = (state = initState, {type, payload}) => {
             try {
                 localStorage.setItem('SEMrush-cards', JSON.stringify(cards));
             } catch (e) {
-                notifier.show({
-                    message: 'Hey, there is too much data in localStorage. Clear it?',
-                    type: 'confirm',
-                    okText: 'Yep',
-                    cancelText: 'No, I\'ll take risks',
-                    okHandler: () => {
-                        localStorage.setItem('SEMrush-cards', JSON.stringify([]));
-                        window.location.reload()
-                    }
-                });
+                localStorageIsFull();
             }
             return {
                 ...state,
@@ -43,10 +36,7 @@ const cardsReducer = (state = initState, {type, payload}) => {
                 localStorage.setItem('SEMrush-cards', JSON.stringify(updatedCards));
                 window.location.reload()
             } catch (e) {
-                notifier.show({
-                    message: `Something went wrong. Cannot delete card with id ${payload.id}`,
-                    type: 'error'
-                });
+                deletionError(payload.id)
             }
             return {
                 ...state,
@@ -62,8 +52,41 @@ const cardsReducer = (state = initState, {type, payload}) => {
         case 'CLOSE_MODAL': {
             return {
                 ...state,
+                editedItem: null,
                 modalIsOpen: false
             };
+        }
+        case 'EDIT_CARD': {
+            return {
+                ...state,
+                editedItem: payload.data,
+                modalIsOpen: true
+            };
+        }
+        case 'CONFIRM_EDIT': {
+            const editedItem = {
+                ...payload.data
+            };
+            const editedIndex = state.cards.findIndex(elem => elem.id === payload.data.id);
+            const updatedCards = [...state.cards];
+            updatedCards[editedIndex] = editedItem;
+            try {
+                localStorage.setItem('SEMrush-cards', JSON.stringify(updatedCards));
+            } catch (e) {
+                localStorageIsFull()
+            }
+            return {
+                ...state,
+                cards: updatedCards,
+                editedItem: null,
+                modalIsOpen: false
+            };
+        }
+        case 'TOGGLE_EDIT_MODE': {
+            return {
+                ...state,
+                editingMode: !state.editingMode
+            }
         }
         default:
             return state;

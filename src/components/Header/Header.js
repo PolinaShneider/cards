@@ -4,7 +4,8 @@ import './Header.css';
 import PropTypes from 'prop-types';
 
 const Header = (props) => {
-    const {openModal} = props;
+    const {openModal, toggleEditMode, editingMode} = props;
+    const buttonText = editingMode ? 'Stop editing' : 'Start editing';
     return (
         <header className="Header">
             <img src={logo} className="Header-logo" alt="SEMrush" />
@@ -17,13 +18,18 @@ const Header = (props) => {
                 <button onClick={openModal}>
                     Add new
                 </button>
+                <button onClick={toggleEditMode}>
+                    {buttonText}
+                </button>
             </div>
         </header>
     );
 };
 
 Header.propTypes = {
-    openModal: PropTypes.func
+    openModal: PropTypes.func,
+    toggleEditMode: PropTypes.func,
+    editingMode: PropTypes.bool
 };
 
 export default Header;

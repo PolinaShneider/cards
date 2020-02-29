@@ -1,12 +1,12 @@
 import React from 'react';
 import './Card.css';
-import {faTrash} from '@fortawesome/free-solid-svg-icons';
+import {faTrash, faPen} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import notifier from 'codex-notifier';
 import PropTypes from 'prop-types';
 
 const Card = (props) => {
-    const {title, description, image, id, deleteCard, bigCover} = props;
+    const {title, description, image, id, deleteCard, editCard, bigCover, editingMode} = props;
 
     function removeCard() {
         notifier.show({
@@ -28,9 +28,18 @@ const Card = (props) => {
 
     return (
         <div className={classes.join(' ')}>
-            <span className="Card-delete" onClick={() => removeCard()}>
-                <FontAwesomeIcon icon={faTrash}/>
-            </span>
+            {
+                editingMode && (
+                    <div>
+                        <span className="Card-edit" onClick={() => editCard({title, description, image, bigCover, id})}>
+                            <FontAwesomeIcon icon={faPen}/>
+                        </span>
+                        <span className="Card-delete" onClick={() => removeCard()}>
+                            <FontAwesomeIcon icon={faTrash}/>
+                        </span>
+                    </div>
+                )
+            }
             <div style={
                 {backgroundImage: `url(${image})`}
             } className="Card-image"/>
@@ -52,7 +61,9 @@ Card.propTypes = {
     image: PropTypes.string,
     id: PropTypes.string,
     bigCover: PropTypes.bool,
-    deleteCard: PropTypes.func
+    deleteCard: PropTypes.func,
+    editCard: PropTypes.func,
+    editingMode: PropTypes.bool
 };
 
 export default Card;

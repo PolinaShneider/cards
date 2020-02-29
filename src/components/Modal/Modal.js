@@ -9,13 +9,29 @@ import PropTypes from 'prop-types';
 class Modal extends Component {
     constructor(props) {
         super(props);
-        this.state = {file: '', title: '', description: '', bigCover: false, errors: []};
+        console.log(props);
+
+        this.state = {
+            file: '',
+            title: '',
+            description: '',
+            bigCover: false,
+            errors: []
+        };
         this.cover = React.createRef();
         this.checkbox = React.createRef();
     }
 
+    componentDidUpdate(prevProps) {
+        if (this.props.editedItem && prevProps.editedItem !== this.props.editedItem) {
+            const {image, title, description, bigCover} = this.props.editedItem;
+            this.setState({file: image, title, description, bigCover});
+            this.showPreview(image);
+        }
+    }
+
     render() {
-        const {hidden} = this.props;
+        const {hidden, editedItem} = this.props;
         const {file, errors} = this.state;
         return (
             <div className="Modal-overlay" hidden={hidden}>
@@ -23,27 +39,24 @@ class Modal extends Component {
                     <FontAwesomeIcon className="Modal-close" onClick={() => this.closeModal()} icon={faTimes}/>
                     <h1>Add new</h1>
                     <label htmlFor="cover" className="Modal-file" ref={this.cover}>
-                        <DragnDrop onDrop={(files) => this.showPreview(files)}/>
+                        <DragnDrop onDrop={(files) => this.onImageUpload(files)}/>
                         {
-                            !file && (
+                            file ? (
+                                <span className="Modal-file-delete">
+                                    <FontAwesomeIcon onClick={(e) => this.deleteCover(e)} icon={faTrash}/>
+                                </span>
+                            ) : (
                                 <div className="Modal-file-empty">
                                     <img src={documentIcon} alt="Upload an image"/>
                                     select an image file to upload or drag it here
                                 </div>
                             )
                         }
-                        {
-                            file && (
-                                <span className="Modal-file-delete">
-                                    <FontAwesomeIcon onClick={(e) => this.deleteCover(e)} icon={faTrash}/>
-                                </span>
-                            )
-                        }
                         <input
                             id="cover"
                             type="file"
                             accept="image/*"
-                            onChange={(e) => this.showPreview(e.target.files)}
+                            onChange={(e) => this.onImageUpload(e.target.files)}
                         />
                     </label>
                     <div className="input-group">
@@ -72,7 +85,7 @@ class Modal extends Component {
                             type="checkbox"
                             name="bigCover"
                             ref={this.checkbox}
-                            checked={this.state.checked}
+                            checked={this.state.bigCover}
                             onChange={(e) => this.setState(
                                 {bigCover: e.target.checked}
                             )}
@@ -81,9 +94,17 @@ class Modal extends Component {
                     {errors.length > 0 && (
                         <div className="alert-danger">{errors[0]}</div>
                     )}
-                    <button onClick={(e) => this.addCard(e)}>
-                        Save
-                    </button>
+                    {
+                        editedItem ? (
+                            <button onClick={(e) => this.confirmEdit(e)}>
+                                Update
+                            </button>
+                        ) : (
+                            <button onClick={(e) => this.addCard(e)}>
+                                Save
+                            </button>
+                        )
+                    }
                 </form>
             </div>
         );
@@ -102,27 +123,10 @@ class Modal extends Component {
         e.preventDefault();
         const {onSave} = this.props;
         const {file, title, description, bigCover} = this.state;
-        const errors = [];
 
-        if (!file) {
-            errors.push('Image is empty or invalid');
-        }
-
-        if (!title) {
-            errors.push('Title is empty');
-        }
-
-        if (!description) {
-            errors.push('Description is empty');
-        }
-
-        if (!errors.length) {
+        if (this.dataIsValid()) {
             onSave({title, description, image: file, bigCover});
             this.closeModal();
-        } else {
-            this.setState({
-                errors
-            })
         }
     }
 
@@ -147,16 +151,20 @@ class Modal extends Component {
         }
     }
 
-    showPreview(files) {
+    showPreview(url) {
+        if (this.cover.current) {
+            this.cover.current.style.background = `url(${url}) 0 30% / cover no-repeat transparent`;
+        }
+    }
+
+    onImageUpload(files) {
         const reader = new FileReader();
         if (reader) {
             reader.readAsDataURL(files[0]);
             reader.onload = (e) => {
                 const url = e.target.result;
 
-                if (this.cover.current) {
-                    this.cover.current.style.background = `url(${url}) 0 30% / cover no-repeat transparent`;
-                }
+                this.showPreview(url);
 
                 this.setState({
                     file: url
@@ -164,12 +172,48 @@ class Modal extends Component {
             };
         }
     }
+
+    dataIsValid() {
+        const {file, title, description} = this.state;
+        const errors = [];
+
+        if (!file) {
+            errors.push('Image is empty or invalid');
+        }
+
+        if (!title) {
+            errors.push('Title is empty');
+        }
+
+        if (!description) {
+            errors.push('Description is empty');
+        }
+
+        this.setState({
+            errors
+        });
+
+        return errors.length === 0;
+    }
+
+    confirmEdit(e) {
+        e.preventDefault();
+        const {confirmEdit} = this.props;
+        const {file, title, description, bigCover} = this.state;
+
+        if (this.dataIsValid()) {
+            confirmEdit({title, description, image: file, bigCover, id: this.props.editedItem.id});
+            this.closeModal();
+        }
+    }
 }
 
 Modal.propTypes = {
     hidden: PropTypes.bool,
     onSave: PropTypes.func,
-    closeModal: PropTypes.func
+    confirmEdit: PropTypes.func,
+    closeModal: PropTypes.func,
+    editedItem: PropTypes.object
 };
 
 export default Modal;

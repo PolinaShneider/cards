@@ -38,7 +38,7 @@
     word-break: break-all;
 }
 
-.Card-delete {
+.Card-delete, .Card-edit {
     color: #ffffff;
     width: 34px;
     height: 34px;
@@ -46,24 +46,32 @@
     border-radius: 4px;
     background-color: #000000;
     position: absolute;
-    top: 7px;
-    right: 9px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.Card-delete:hover {
+.Card-delete {
+    top: 7px;
+    right: 9px;
+}
+
+.Card-edit {
+    top: 7px;
+    right: 45px;
+}
+
+.Card-delete:hover, .Card-edit:hover {
     background-color: #ed2d2d;
     cursor: pointer;
 }
 
-.Card-delete:active {
+.Card-delete:active, .Card-edit:active {
     background-color: #d00000;
     cursor: pointer;
 }
 
-.Card-delete svg {
+.Card-delete svg, .Card-edit svg {
     color: #ffffff;
 }
 

@@ -37,6 +37,10 @@
     margin-top: 28px;
 }
 
+.Header button + button {
+    margin-left: 15px;
+}
+
 .Header button:hover {
     background-color: #eeeeee;
     cursor: pointer;

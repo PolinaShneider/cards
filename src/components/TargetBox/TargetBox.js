@@ -1,9 +1,9 @@
 import React from 'react'
 import {NativeTypes} from 'react-dnd-html5-backend'
 import {useDrop} from 'react-dnd'
-import notifier from 'codex-notifier';
 import './TargetBox.css';
 import PropTypes from 'prop-types';
+import {unsupportedFileType} from '../../helpers/notifications';
 
 const TargetBox = props => {
     const {onDrop} = props;
@@ -13,11 +13,7 @@ const TargetBox = props => {
             const droppedImage = monitor.getItem().files[0];
 
             if (!/^image\//.test(droppedImage.type)) {
-                notifier.show({
-                    style: 'info',
-                    message: 'Only image files are acceptable'
-                });
-
+                unsupportedFileType();
                 return;
             }
 

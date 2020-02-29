@@ -26,4 +26,28 @@ export const deleteCardAction = (id) => {
             id
         }
     }
-}
+};
+
+export const editCardAction = (data) => {
+    return {
+        type: 'EDIT_CARD',
+        payload: {
+            data
+        }
+    }
+};
+
+export const confirmEditAction = (data) => {
+    return {
+        type: 'CONFIRM_EDIT',
+        payload: {
+            data
+        }
+    }
+};
+
+export const toggleEditModeAction = () => {
+    return {
+        type: 'TOGGLE_EDIT_MODE',
+    }
+};

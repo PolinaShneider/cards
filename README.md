@@ -8,7 +8,7 @@ Created interface for adding/deleting/editing cards.
 3. Image can be uploaded from PC or drag'n'drop
 4. Cards data is kept in localStorage
 5. If you turn on editing mode, you can edit or delete cards
-6. Pagination
+6. Pagination (maximum 9 cards per page regardless of their size)
 7. Mobile adaptivity
 
 ### Technology used

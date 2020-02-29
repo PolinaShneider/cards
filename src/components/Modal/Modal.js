@@ -66,8 +66,9 @@ class Modal extends Component {
                         />
                     </div>
                     <div className="checkbox-group">
-                        <label>Is big</label>
+                        <label htmlFor="bigCover">Is big</label>
                         <input
+                            id="bigCover"
                             type="checkbox"
                             name="bigCover"
                             ref={this.checkbox}

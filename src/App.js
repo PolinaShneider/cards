@@ -138,6 +138,7 @@ App.propTypes = {
     deleteCard: PropTypes.func,
     editCard: PropTypes.func,
     confirmEdit: PropTypes.func,
+    toggleEditMode: PropTypes.func,
     history: PropTypes.object,
     location: PropTypes.object
 };

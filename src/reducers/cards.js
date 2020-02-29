@@ -1,4 +1,3 @@
-import notifier from 'codex-notifier';
 import {v4 as uuidv4} from 'uuid';
 import {deletionError, localStorageIsFull} from '../helpers/notifications';
 
